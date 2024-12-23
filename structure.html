@@ -1,0 +1,26 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Reader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Speed Reader</h1>
+        <textarea id="text-input" placeholder="Paste your text here"></textarea>
+        <div class="controls">
+            <label for="wpm">Words per Minute:</label>
+            <input type="range" id="wpm" min="100" max="1000" value="300" step="50">
+            <span id="wpm-display">300 WPM</span>
+            <button id="start-btn">Start</button>
+            <button id="pause-btn">Pause</button>
+            <button id="reset-btn">Reset</button>
+        </div>
+        <div id="display-panel">Text will appear here</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
