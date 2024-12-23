@@ -1,6 +1,7 @@
 # Speed Reader
 
-A minimalist speed reading tool to help me get through text faster. Built with vanilla JavaScript.
+A minimalist speed reading tool to help me get through text faster. Just copy plain text, drop in there, and bang, beauty. 
+Built with vanilla JavaScript.
 
 ## Features
 
@@ -14,7 +15,7 @@ A minimalist speed reading tool to help me get through text faster. Built with v
 
 ## Why?
 
-I wanted a simple tool to help me read faster without the bloat of existing speed reading apps. This does exactly what I need and nothing more.
+I wanted a simple tool to help me read faster without the bloat of existing speed reading apps. This does exactly what I need and nothing more. Speed and simplicity were really the key factors, might add some QoL features later down the line.
 
 ## Usage
 
