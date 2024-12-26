@@ -1,4 +1,5 @@
 // script.js
+
 const wpmSlider = document.getElementById('wpm');
 const wpmDisplay = document.getElementById('wpm-display');
 const textInput = document.getElementById('text-input');
@@ -7,28 +8,27 @@ const startButton = document.getElementById('start-btn');
 const pauseButton = document.getElementById('pause-btn');
 const resetButton = document.getElementById('reset-btn');
 
+
 let chunks = [];
 let currentIndex = 0;
 let readingInterval = null;
 let isReading = false;
 
-wpmSlider.addEventListener('input', () => {
-    wpmDisplay.textContent = `${wpmSlider.value} WPM`;
-});
+wpmSlider.addEventListener('input', updateWpmDisplay);
 
 function splitTextIntoChunks(text, highlightPosition = 'first') {
     return text.split(/\s+/).map(word => {
         if (!word) return '';
         const middleIndex = Math.floor(word.length / 2);
 
-        if (highlightPosition === 'first') {
-            const firstLetter = word.charAt(0);
-            return `<span style="font-weight: bold;">${firstLetter}</span>${word.slice(1)}`;
-        } else if (highlightPosition === 'middle') {
-            const middleLetter = word.charAt(middleIndex);
-            return `${word.slice(0, middleIndex)}<span style="font-weight: bold;">${middleLetter}</span>${word.slice(middleIndex + 1)}`;
+        switch (highlightPosition) {
+            case 'first':
+                return `<span style="font-weight: bold;">${word.charAt(0)}</span>${word.slice(1)}`;
+            case 'middle':
+                return `${word.slice(0, middleIndex)}<span style="font-weight: bold;">${word.charAt(middleIndex)}</span>${word.slice(middleIndex + 1)}`;
+            default:
+                return word;
         }
-        return word;
     });
 }
 
@@ -42,16 +42,12 @@ function displayNextWord() {
 }
 
 function startReading() {
-    if (isReading) return;
+    if (isReading || !textInput.value.trim()) return;
 
-    if (!chunks.length) {
-        const highlightPosition = document.querySelector('input[name="highlight"]:checked').value;
-        chunks = splitTextIntoChunks(textInput.value, highlightPosition);
-    }
-
+    const highlightPosition = document.querySelector('input[name="highlight"]:checked').value;
+    chunks = splitTextIntoChunks(textInput.value, highlightPosition);
     isReading = true;
-    const intervalTime = 60000 / parseInt(wpmSlider.value);
-    readingInterval = setInterval(displayNextWord, intervalTime);
+    setReadingInterval();
 }
 
 function stopReading() {
@@ -60,24 +56,23 @@ function stopReading() {
     isReading = false;
 }
 
+function setReadingInterval() {
+    const intervalTime = 60000 / parseInt(wpmSlider.value);
+    readingInterval = setInterval(displayNextWord, intervalTime);
+}
+
+function updateWpmDisplay() {
+    wpmDisplay.textContent = `${wpmSlider.value} WPM`;
+}
+
 function adjustSpeed(event) {
     if (!event.shiftKey) return;
 
     let newValue = parseInt(wpmSlider.value);
-    if (event.key === '+' || event.key === '=') {
-        if (newValue < wpmSlider.max) {
-            newValue += 50;
-        }
-    } else if (event.key === '-' || event.key === '_' || event.keyCode === 109) {
-        if (newValue > wpmSlider.min) {
-            newValue -= 50;
-        }
-    } else {
-        return;
-    }
-
-    wpmSlider.value = newValue;
-    wpmDisplay.textContent = `${newValue} WPM`;
+    const step = event.key === '+' || event.key === '=' ? 50 : -50;
+    newValue += step;
+    wpmSlider.value = Math.min(Math.max(newValue, wpmSlider.min), wpmSlider.max);
+    updateWpmDisplay();
 
     if (isReading) {
         stopReading();
@@ -85,11 +80,16 @@ function adjustSpeed(event) {
     }
 }
 
+function updateWordCount() {
+    const text = document.getElementById('text-input').value;
+    const wordCount = text.split(/\s+/).filter(Boolean).length;
+    document.getElementById('word-count').textContent = wordCount;
+}
+
+document.getElementById('text-input').addEventListener('input', updateWordCount);
+updateWordCount();
+
 startButton.addEventListener('click', () => {
-    if (!textInput.value.trim()) {
-        alert('Please paste some text to read!');
-        return;
-    }
     const highlightPosition = document.querySelector('input[name="highlight"]:checked').value;
     chunks = splitTextIntoChunks(textInput.value, highlightPosition);
     startReading();

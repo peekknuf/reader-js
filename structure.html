@@ -12,9 +12,11 @@
     <div class="container">
         <h1>Speed Reader</h1>
         <textarea id="text-input" placeholder="Paste your text here"></textarea>
+        <p>Words pasted: <span id="word-count">0</span></p>
+
 
         <div class="controls">
-            <label for="wpm">Words per Minute:</label>
+            <label for="wpm">Reading Speed:</label>
             <input type="range" id="wpm" min="100" max="1000" value="300" step="50">
             <span id="wpm-display">300 WPM</span>
 
@@ -28,10 +30,11 @@
                     <input type="radio" name="highlight" value="middle"> Middle Character
                 </label>
             </div>
-
-            <button id="start-btn">Start</button>
-            <button id="pause-btn">Pause</button>
-            <button id="reset-btn">Reset</button>
+            <div id="button-container">
+                <button id="start-btn">Start</button>
+                <button id="pause-btn">Pause</button>
+                <button id="reset-btn">Reset</button>
+            </div>
         </div>
 
         <div id="display-panel">Text will appear here</div>
