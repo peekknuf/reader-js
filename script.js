@@ -16,22 +16,40 @@ let isReading = false;
 
 wpmSlider.addEventListener('input', updateWpmDisplay);
 
-function splitTextIntoChunks(text, highlightPosition = 'first') {
+
+/**
+ * Split a given text into an array of strings, each containing a word of the
+ * original text, with the first or middle character highlighted.
+ *
+ * @param {string} text The text to split.
+ * @param {string} [highlightPosition='first'] The position of the character to
+ *   highlight.  Can be either 'first' or 'middle'.
+ * @param {string} [highlightTag='span'] The tag to use for highlighting.
+ * @return {string[]} An array of strings, each containing a word of the original
+ *   text with the chosen character highlighted.
+ */
+function splitTextIntoChunks(text, highlightPosition = 'first', highlightTag = 'span') {
+    if (typeof text !== "string" || !text.trim()) return [];
+
     return text.split(/\s+/).map(word => {
         if (!word) return '';
         const middleIndex = Math.floor(word.length / 2);
-
         switch (highlightPosition) {
             case 'first':
-                return `<span style="font-weight: bold;">${word.charAt(0)}</span>${word.slice(1)}`;
+                return `<${highlightTag} style="font-weight: bold;">${word.charAt(0)}</${highlightTag}>${word.slice(1)}`;
             case 'middle':
-                return `${word.slice(0, middleIndex)}<span style="font-weight: bold;">${word.charAt(middleIndex)}</span>${word.slice(middleIndex + 1)}`;
+                return `${word.slice(0, middleIndex)}${word.length % 2 === 0 ? '' : ' '}<${highlightTag} style="font-weight: bold;">${word.charAt(middleIndex)}</${highlightTag}>${word.slice(middleIndex + 1)}`;
             default:
                 return word;
         }
     });
 }
 
+
+/**
+ * Displays the current word chunk in the display panel and increments the index.
+ * If all chunks have been displayed, it stops the reading process.
+ */
 function displayNextWord() {
     if (currentIndex < chunks.length) {
         displayPanel.innerHTML = chunks[currentIndex];
@@ -41,6 +59,12 @@ function displayNextWord() {
     }
 }
 
+/**
+ * Starts the reading process if the text input field is not empty and the
+ * process is not already running.
+ *
+ * @return {void}
+ */
 function startReading() {
     if (isReading || !textInput.value.trim()) return;
 
@@ -65,6 +89,14 @@ function updateWpmDisplay() {
     wpmDisplay.textContent = `${wpmSlider.value} WPM`;
 }
 
+/**
+ * Listens for Shift + '+' or Shift + '-' keypresses and adjusts the WPM slider
+ * by 50 steps in the corresponding direction. If the reading process is running,
+ * it stops and restarts with the new WPM value.
+ *
+ * @param {KeyboardEvent} event The event object of the keypress.
+ * @return {void}
+ */
 function adjustSpeed(event) {
     if (!event.shiftKey) return;
 
