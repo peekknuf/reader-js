@@ -127,8 +127,16 @@ function updateWordCount() {
     document.getElementById('word-count').textContent = wordCount;
 }
 
-textInput.addEventListener('input', updateWordCount);
-updateWordCount();
+// Event listener for keydown to ignore Shift + + or Shift + _
+textInput.addEventListener('keydown', function (event) {
+    if (event.shiftKey && (event.key === '+' || event.key === '_')) {
+        event.preventDefault(); // Prevent the default action
+        return false; // Ignore the input
+    }
+});
+
+// Initial word count calculation
+updateWordCount(textInput.value);
 
 // Event listeners for buttons
 startButton.addEventListener('click', startReading);
@@ -140,7 +148,7 @@ resetButton.addEventListener('click', () => {
     chunks = [];
     displayPanel.textContent = 'Text will appear here';
 });
-
+textInput.addEventListener('input', updateWordCount);
 document.addEventListener('keydown', adjustSpeed);
 
 libraryButton.addEventListener('click', async () => {
