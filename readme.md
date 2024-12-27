@@ -22,6 +22,7 @@ I wanted a simple tool to help me read faster without the bloat of existing spee
 1. Paste your text.
 2. Set your desired WPM (words per minute).
 3. Choose the letter highlight preference (first or middle letter).
-4. Hit **start** and adjust speed on the fly with keyboard shortcuts.
+4. WE'RE ADDING A LIBRARY of prepared texts, still work in progress though
+4. Hit **start** and adjust speed on the fly with keyboard shortcuts, will add dynamic changes with mouse clicks, gotta be better.
 
 That's it! Happy speed reading 🚀
