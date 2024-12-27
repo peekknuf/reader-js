@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "title": "The Power of Focus",
+    "content": "Focus is the key to achieving greatness in any field...",
+    "category": "Motivational"
+  },
+  {
+    "id": 2,
+    "title": "A Journey Through Space",
+    "content": "Space is vast and mysterious, filled with countless wonders...",
+    "category": "Educational"
+  },
+  {
+    "id": 3,
+    "title": "The Rabbit and the Tortoise",
+    "content": "Once upon a time, a rabbit and a tortoise decided to race...",
+    "category": "Fiction"
+  }
+]
+

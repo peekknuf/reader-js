@@ -137,3 +137,43 @@ resetButton.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', adjustSpeed);
+let libraryOpen = false;
+const libraryContainer = document.createElement('div');
+libraryContainer.id = 'library-container';  
+
+
+document.getElementById('library-btn').addEventListener('click', async () => {
+    if (libraryOpen) {
+        libraryContainer.style.display = 'none';  
+    } else {
+        const response = await fetch('/library');
+        const data = await response.json();
+        displayBooks(data);
+        libraryContainer.style.display = 'block';  // Make library content visible
+    }
+    libraryOpen = !libraryOpen;  // Toggle the libraryOpen state
+});
+
+
+function displayBooks(books) {
+    libraryContainer.innerHTML = ''; 
+    books.forEach(book => {
+        const bookElement = document.createElement('div');
+        const bookTitle = document.createElement('h3');
+        bookTitle.textContent = book.title;
+        bookTitle.addEventListener('click', () => loadTextToInput(book));  // Add event listener for title click
+
+        bookElement.appendChild(bookTitle);
+        libraryContainer.appendChild(bookElement);
+    });
+
+    if (!document.body.contains(libraryContainer)) {
+        document.body.appendChild(libraryContainer);
+    }
+}
+
+// Function to load text into the text input
+function loadTextToInput(book) {
+    const textInput = document.getElementById('text-input');
+    textInput.value = book.content; 
+}

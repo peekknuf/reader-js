@@ -85,3 +85,37 @@ button:hover {
     border-radius: 4px;
     padding: 10px;
 }
+
+#library-modal {
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* Library container style */
+#library-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 25%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-left: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    display: none;  /* Initially hidden */
+}
+
+/* Title styles */
+#library-container h3 {
+    cursor: pointer;
+    margin: 10px 0;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+#library-container h3:hover {
+    background-color: #ddd;
+}
