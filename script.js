@@ -106,8 +106,11 @@ function updateWpmDisplay() {
 function adjustSpeed(event) {
     if (!event.shiftKey) return;
 
+    const key = event.key;
+    if (key !== '+' && key !== '_') return;
+
     let newValue = parseInt(wpmSlider.value);
-    const step = event.key === '+' || event.key === '=' ? 50 : -50;
+    const step = key === '+' ? 50 : -50; // '+' increases, '_' decreases
     newValue += step;
     wpmSlider.value = Math.min(Math.max(newValue, wpmSlider.min), wpmSlider.max);
     updateWpmDisplay();
@@ -124,15 +127,11 @@ function updateWordCount() {
     document.getElementById('word-count').textContent = wordCount;
 }
 
-document.getElementById('text-input').addEventListener('input', updateWordCount);
+textInput.addEventListener('input', updateWordCount);
 updateWordCount();
 
-startButton.addEventListener('click', () => {
-    const highlightPosition = document.querySelector('input[name="highlight"]:checked').value;
-    chunks = splitTextIntoChunks(textInput.value, highlightPosition);
-    startReading();
-});
-
+// Event listeners for buttons
+startButton.addEventListener('click', startReading);
 pauseButton.addEventListener('click', stopReading);
 
 resetButton.addEventListener('click', () => {
@@ -151,9 +150,9 @@ libraryButton.addEventListener('click', async () => {
         const response = await fetch('/library');
         const data = await response.json();
         displayBooks(data);
-        libraryContainer.style.display = 'block';  
+        libraryContainer.style.display = 'block';
     }
-    libraryOpen = !libraryOpen; 
+    libraryOpen = !libraryOpen;
 });
 
 
