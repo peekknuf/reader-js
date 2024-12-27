@@ -11,7 +11,6 @@ Built with vanilla JavaScript.
   - `Shift` + `-` to slow down
 - **Highlights the first or middle letter** of each word for better focus.
 - **Play/pause/reset controls** for easy navigation.
-- **No dependencies**, just pure JS.
 
 ## Why?
 
