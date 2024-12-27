@@ -1,4 +1,4 @@
-# Speed Reader
+# fReading
 
 A minimalist speed reading tool to help me get through text faster. Just copy plain text, drop in there, and bang, beauty. 
 Built with vanilla JavaScript.
